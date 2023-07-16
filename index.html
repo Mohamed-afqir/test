@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8789800190538252"
+        crossorigin="anonymous"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120084174-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-120084174-3');
+    </script>
+    <title>topoX Map</title>
+    <meta charset="UTF-8" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.9" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link defer href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
+    <link defer rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <link rel="stylesheet" href="libs/leaflet.pm.css" />
+    <link defer rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+    <link defer rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+    <link defer rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link defer rel="stylesheet" href="plugins/L.Control.MousePosition.css" />
+    <link defer rel="stylesheet" href="plugins/am/leaflet.awesome-markers.css" />
+    <link defer rel="stylesheet" href="plugins/leaflet.social.css" />
+    <link defer rel="stylesheet" href="plugins/search/leaflet-search.css" />
+    <link defer rel="stylesheet" href="style.css?v=702" />
+    <script data-ad-client="ca-pub-8789800190538252" async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8789800190538252"
+        crossorigin="anonymous"></script>
+    <script defer src="https://apis.google.com/js/api.js" type="text/javascript"></script>
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script defer src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+    <script defer src="libs/leaflet.pm.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.min.js"></script>
+    <script defer src="libs/shp.js"></script>
+    <script defer src="plugins/dxf-parser.js"></script>
+    <script defer src="plugins/mq.js"></script>
+    <script defer src="plugins/leaflet.social.js"></script>
+    <script defer src="plugins/L.Control.Appearance.js"></script>
+    <script defer src="plugins/search/leaflet-search.js"></script>
+    <script defer src="plugins/locate.js" charset="utf-8"></script>
+    <script defer src="plugins/proj4.js"></script>
+    <script defer src="plugins/proj4leaflet.js"></script>
+    <script defer src="plugins/L.Control.MousePosition.js"></script>
+    <script defer src="plugins/circleToPolygon.js"></script>
+    <script defer src="plugins/am/leaflet.awesome-markers.min.js"></script>
+    <script defer src="plugins/zip.js"></script>
+    <script defer src="plugins/togeojson.js"></script>
+    <script defer src="morocco.js"></script>
+    <style>
+        .loading {
+            position: absolute;
+            background-color: rgb(255, 255, 255);
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+
+        .splash {
+            margin: 0 auto;
+            display: none;
+            background-image: url('bg.png');
+            width: 313px;
+            height: 160px;
+            position: relative;
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+
+        .cross {
+            display: none;
+            background-image: url('cross.png');
+            width: 47px;
+            height: 46px;
+            position: absolute;
+            left: 242px;
+            top: 34px;
+            -webkit-animation: spin 0.6s ease-out infinite;
+            -moz-animation: spin 0.6s ease-out infinite;
+            animation: spin 0.6s ease-out infinite;
+        }
+
+        @-moz-keyframes spin {
+            100% {
+                -moz-transform: rotate(90deg);
+            }
+        }
+
+        @-webkit-keyframes spin {
+            100% {
+                -webkit-transform: rotate(90deg);
+            }
+        }
+
+        @keyframes spin {
+            100% {
+                -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+            }
+        }
+
+
+        @-moz-keyframes loading {
+            100% {
+                -moz-transform: rotate(360deg);
+            }
+        }
+
+        @-webkit-keyframes loading {
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes loading {
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loading">
+        <div class="splash">
+            <div class="cross"></div>
+        </div>
+    </div>
+
+    <div id="map"></div>
+
+    <select id="proj-select" class="form-control form-control-sm">
+        <option selected value="N">Maroc - Zone 1</option>
+        <option value="S">Maroc - Zone 2</option>
+        <option value="SN">Maroc - Zone 3</option>
+        <option value="SS">Maroc - Zone 4</option>
+        <option disabled>──────────</option>
+        <option value="AN">Algérie - Nord</option>
+        <option value="AS">Algérie - Sud</option>
+        <option disabled>──────────</option>
+        <option value="TN">Tunisie - Nord</option>
+        <option value="TS">Tunisie - Sud</option>
+        <option disabled>──────────</option>
+        <option value="Q">Qatar - QNG94</option>
+        <option disabled>──────────</option>
+        <option value="F1">France - Zone 1</option>
+        <option value="F2">France - Zone 2</option>
+        <option value="F3">France - Zone 3</option>
+        <option value="F4">France - Zone 4</option>
+        <option value="F1C">France - Z1 Carto</option>
+        <option value="F2C">France - Z2 Carto</option>
+        <option value="F3C">France - Z3 Carto</option>
+        <option value="F4C">France - Z4 Carto</option>
+        <option value="FCC42">France - CC42 (Z1)</option>
+        <option value="FCC43">France - CC43 (Z2)</option>
+        <option value="FCC44">France - CC44 (Z3)</option>
+        <option value="FCC45">France - CC45 (Z4)</option>
+        <option value="FCC46">France - CC46 (Z5)</option>
+        <option value="FCC47">France - CC47 (Z6)</option>
+        <option value="FCC48">France - CC48 (Z7)</option>
+        <option value="FCC49">France - CC49 (Z8)</option>
+        <option value="FCC50">France - CC50 (Z9)</option>
+    </select>
+
+    <div class="scatter-points-container" style="display: none;">
+        <div class="scatter-points-inner">
+            <label for="formControlRange"><b>Choisissez le nombre de points :</b></label>
+            <input type="range" class="form-control-range" id="scatterRange" min="5" max="22" step="1"
+                onInput="updateScatter($(this).val())">
+            <div class="row">
+                <div class="col-sm">
+                    <b>Min</b>
+                </div>
+                <div class="col-sm" style="text-align: right;">
+                    <b>Max</b>
+                </div>
+            </div>
+            <div class="modal-footer text-center" style="margin-top: 0px; padding: 0px;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="opacity: .7;">
+                    <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="cancelScatter();">
+                        &nbsp;Annuler&nbsp;
+                    </a>
+                </button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="opacity: 1;">
+                    <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="applyScatter()">
+                        &nbsp;Appliquer&nbsp;
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="mark-position-btn-container">
+        <a id="mark-position-btn" class="btn btn-primary"><i style="color: white;" class="fa fa-map-marker"></i></a>
+    </div>
+
+    <div class="login-btn-container" id="login-container">
+        <a href="javascript:void(0)" class="login-btn btn btn-primary animate-flicker">
+            Se connecter
+        </a>
+    </div>
+
+    <div class="account-btn-container">
+        <a href="javascript:void(0)" class="account-btn btn btn-primary">
+        </a>
+    </div>
+
+    <button id="import-export-btn" type="button" class="btn btn-lg btn-secondary" data-toggle="modal"
+        data-target="#importExportModal"><i class="fa fa-file"></i></button>
+    <div class="modal fade" id="importExportModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 10px">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Import / Export : </b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        ✖
+                    </button>
+                </div>
+                <div class="modal-body" style="padding: 10px">
+                    <div class="form-group row">
+                        <label for="getDXF" id="import-dxf-btn" type="button" class="btn btn-secondary">Import
+                            DXF</label>
+                        <input style="display: none;" id="getDXF" type="file" accept=".dxf"
+                            onchange="onChooseFileDXF(event)" />
+                        <label for="getSHP" id="import-shp-btn" type="button" class="btn btn-secondary">Import Shapefile
+                            (.ZIP)</label>
+                        <input style="display: none;" id="getSHP" type="file" accept=".zip"
+                            onchange="onChooseFileSHP(event)" />
+                        <label for="getGeoJSON" id="import-geojson-btn" type="button" class="btn btn-secondary">Import
+                            GeoJSON</label>
+                        <input style="display: none;" id="getGeoJSON" type="file" accept=".geojson, .json"
+                            onchange="onChooseFileGeoJSON(event)" />
+                        <label for="getKML" id="import-kml-btn" type="button" class="btn btn-secondary">Import KML
+                            (.KML/.KMZ)</label>
+                        <input style="display: none;" id="getKML" type="file" accept=".kml, .kmz"
+                            onchange="onChooseFileKML(event)" />
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        <button id="export-dxf-btn" type="button" class="btn btn-secondary">Export DXF (sans
+                            points)</button>
+                        <button id="export-shp-btn" type="button" class="btn btn-secondary">Export
+                            Shapefile (.ZIP)</button>
+                        <button id="export-geojson-btn" type="button" class="btn btn-secondary">Export
+                            GeoJSON</button>
+                        <button id="export-kml-btn" type="button" class="btn btn-secondary">Export KML
+                            (.KML)</button>
+                        <button id="export-txt-btn" type="button" class="btn btn-secondary pro">Export de points
+                            (.TXT)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="goto-btn" type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
+        data-target="#gotoModal">Aller à</button>
+    <div class="modal fade" id="gotoModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 10px">
+                    <h5 class="modal-title" id="exampleModalLabel">Aller à :</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        ✖
+                    </button>
+                </div>
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                            role="tab" aria-controls="nav-home" aria-selected="true">Maroc - Zone 1</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                            role="tab" aria-controls="nav-profile" aria-selected="false">WGS84</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="modal-body" style="padding: 10px">
+                            <div class="form-group row">
+                                <div class="col-sm-6" style="border-right: 1px solid gray;">
+                                    <input type="text" class="form-control" id="xCoord" placeholder="X" />
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="yCoord" placeholder="Y" />
+                                </div>
+                            </div>
+                            <button id="apply-btn-mch" style="float: right" type="button"
+                                class="btn btn-primary">Appliquer</button>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <div class="modal-body" style="padding: 10px">
+                            <div class="form-group row">
+                                <div class="col-sm-6" style="border-right: 1px solid gray;">
+                                    <input type="text" class="form-control" id="lat" placeholder="Latitude" />
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="lng" placeholder="Longitude" />
+                                </div>
+                            </div>
+                            <button id="apply-btn-wgs" style="float: right;" type="button"
+                                class="btn btn-primary">Appliquer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--div id="wa-btn-container" class="animate-flicker">
+        <button style="font-weight: bold; border: 1px solid rgb(28, 156, 75); background-color: rgb(30, 182, 86);"
+            href="#" class="btn btn-lg btn-primary">
+            <i class="fa fa-whatsapp"></i><span>&nbsp;&nbsp;+212 7 08 18 17 58</span>
+        </button>
+    </div-->
+
+    <div id="sat-image-btn-container">
+        <a id="sat-image-btn" type="button" title="Télécharger une image satellite" class="btn btn-secondary btn-lg"><i
+                class="fa fa-image"></i></a>
+    </div>
+
+    <div id="color-btns-container">
+        <input type="color">
+    </div>
+
+    <div class="modal fade" id="annModal" tabindex="-1" role="dialog" aria-labelledby="annModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="color: #007bff;">
+                        <b>Méthodes de paiement</b>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        ✖
+                    </button>
+                </div>
+                <div class="modal-body" style="padding: 25px; font-size: 19px;">
+                    <h5 class="modal-title" style="color: #000000; text-align: justify;">
+                        Vous pouvez désormais recharger votre compte <b>sans vous déplacer</b> en utilisant l'un des 3
+                        moyens de paiement suivants :</b>
+                    </h5>
+                    <br>
+                    <nav>
+                        <ul class="nav nav-pills nav-justified">
+                            <li class="nav-item">
+                                <a style="font-weight: bold" class="nav-item nav-link active" id="nav-cih-tab"
+                                    data-toggle="tab" href="#nav-cih" role="tab" aria-controls="nav-home"
+                                    aria-selected="true">Application CIH</a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="font-weight: bold" class="nav-item nav-link" id="nav-other-bank-tab"
+                                    data-toggle="tab" href="#nav-other-bank" role="tab" aria-controls="nav-other-bank"
+                                    aria-selected="false">Autres Banques</a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="font-weight: bold" class="nav-item nav-link" id="nav-jibi-tab"
+                                    data-toggle="tab" href="#nav-jibi" role="tab" aria-controls="nav-jibi"
+                                    aria-selected="false">Application JIBI</a>
+                            </li>
+                        </ul>
+                        <!--div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-cih-tab" data-toggle="tab" href="#nav-cih"
+                                role="tab" aria-controls="nav-home" aria-selected="true">CIH</a>
+                            <a class="nav-item nav-link" id="nav-other-bank-tab" data-toggle="tab"
+                                href="#nav-other-bank" role="tab" aria-controls="nav-other-bank"
+                                aria-selected="false">AUTRE BANQUE</a>
+                            <a class="nav-item nav-link" id="nav-jibi-tab" data-toggle="tab" href="#nav-jibi" role="tab"
+                                aria-controls="nav-jibi" aria-selected="false">JIBI</a>
+                        </div-->
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-cih" role="tabpanel"
+                            aria-labelledby="nav-cih-tab">
+                            <div class="form-group row">
+                                <img style="display: block; margin: auto; max-width: 100%; max-height: 120px; padding: 10px 0"
+                                    src="/cih.png">
+                            </div>
+                            <div class="form-group row"
+                                style=" color: #007bff;; text-align: center; font-weight: bold; display: block;">
+                                Numéro de compte : 9624904211020200
+                                <br>
+                                Nom : Taha ZNAIBER
+                            </div>
+                            <div class="form-group row">
+                                <p
+                                    style="color: #000000; font-size: 18px; font-weight: bold; padding: 0 50px; font-weight: bold;">
+                                    1 - Transfèrer le montant désiré vers le compte ci-dessus.
+                                    <br>
+                                    2 - Envoyez le reçu sur WhatsApp
+                                </p>
+                            </div>
+                            <div class="form-group row">
+                                <a id="preorder-btn"
+                                    style="display:inline-block; font-weight: bold; margin: 5px auto; border: none; background-color: rgb(30, 182, 86);"
+                                    href="#" class="btn btn-lg btn-primary"><i
+                                        class="fa fa-whatsapp"></i>&nbsp;&nbsp;+212 7 08 18 17 58</a>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-other-bank" role="tabpanel"
+                            aria-labelledby="nav-other-bank-tab">
+                            <div class="form-group row">
+                                <img style="display: block; margin: auto; max-width: 100%; max-height: 120px; padding: 10px 0"
+                                    src="/other-bank.png">
+                            </div>
+                            <div class="form-group row"
+                                style="color: #007bff; text-align: center; font-weight: bold; display: block;">
+                                RIB : 230179962490421102020080
+                                <br>
+                                Nom : Taha ZNAIBER
+                            </div>
+                            <div class="form-group row">
+                                <p style="color: #000000; font-size: 18px; font-weight: bold; padding: 0 50px;">
+                                    1 - Transfèrer le montant vers le compte ci-dessus.
+                                    <br>
+                                    2 - Envoyez le reçu sur WhatsApp
+                                </p>
+                            </div>
+                            <div class="form-group row">
+                                <a id="preorder-btn"
+                                    style="display:inline-block; font-weight: bold; margin: 5px auto; border: none; background-color: rgb(30, 182, 86);"
+                                    href="#" class="btn btn-lg btn-primary"><i
+                                        class="fa fa-whatsapp"></i>&nbsp;&nbsp;+212 7 08 18 17 58</a>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-jibi" role="tabpanel" aria-labelledby="nav-jibi-tab">
+                            <div class="form-group row">
+                                <img style="display: block; margin: auto; max-width: 100%; max-height: 120px; padding: 10px 0"
+                                    src="/jibi.png">
+                            </div>
+                            <div class="form-group row">
+                                <p style="color: #000000; font-size: 18px; font-weight: bold; padding: 0 20px;">
+                                    1 - Alimentez le compte JIBI par carte banquaire. (Frais: 6 dh)
+                                    <br>
+                                    2 - Choisissez "Envoyer de l'argent vers un mobile" et entrez le numéro : 07 08 18
+                                    17 58
+                                    <br>
+                                    3 - Transfèrer le montant désiré. (Frais : 5 dh)
+                                    <br>
+                                    4 - Envoyez le reçu sur WhatsApp
+                                </p>
+                            </div>
+                            <div class="form-group row">
+                                <a id="preorder-btn"
+                                    style="display:inline-block; font-weight: bold; margin: 5px auto; border: none; background-color: rgb(30, 182, 86);"
+                                    href="#" class="btn btn-lg btn-primary"><i
+                                        class="fa fa-whatsapp"></i>&nbsp;&nbsp;+212 7 08 18 17 58</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="satModal" tabindex="-1" role="dialog" aria-labelledby="satModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 600px;" role="document">
+            <div class="modal-content">
+                <div class="donation-header modal-header">
+                    <h5 class="modal-title" id="satModalLabel"><b>Téléchargement d'images satellites :</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        ✖
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="sat-container text-center">
+                        <iframe src="https://player.vimeo.com/video/450481759?title=0&byline=0&portrait=0" width="500"
+                            height="281" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        <div class="text-center">
+                            <a href=" javascript:void(0)" style="display: none;" class="btn btn-secondary"
+                                id="last-image-btn">
+                                <b>Retélécharger la dernière image gratuitement</b>
+                            </a>
+                        </div>
+                        <div class="selected-zone text-center animate-flicker">Zone selectionnée : Maroc - Zone 1
+                        </div>
+                        <select style="max-width: 350px; margin: 10px auto;" id="sat-map-type" class="form-control">
+                            <option selected value="s">Google Satellite Map (sans labels)</option>
+                            <option value="y">Google Hybrid Map (avec labels)</option>
+                        </select>
+                        <p style="display:none; width: 350px; border: 2px solid #0e83eb; border-radius: 5px; margin: 10px auto; padding: 5px; font-weight: bold; font-size: 18px; color: #0e83eb"
+                            id="remaining-area-text">
+                            <i style="animation:loading 1s linear infinite;" class="fa fa-spinner"></i>
+                        </p>
+                        <div class="text-center">
+                            <a href="javascript:void(0)" class="btn btn-primary pro-inverted"
+                                id="sim-start-btn"><b>Commencer</b></a>
+                            <a href="javascript:void(0)" class="btn btn-primary"
+                                id="sim-start-with-pass-btn"><b>Commencer avec le
+                                    PASS</b></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="dashboardModal" tabindex="-1" role="dialog" aria-labelledby="dashboardModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 600px;" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="display: block; padding: 10px 10px 5px">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        ✖
+                    </button>
+                    <img class="dashboard-pic"
+                        style="height:40px; width:auto; border-radius: 50%; box-shadow: 0 0 0 1px darkgrey;" />
+                    <span class="dashboard-name" style="vertical-align: middle; font-size: 18px;"></span>
+                </div>
+                <div class="modal-body" style="padding: 10px">
+                    <div style="text-align: center;">
+                        <p style="margin: 0 10px; font-weight: bold; font-size: 26px; color: #0e83eb" id="credit-text">
+                            <i style="animation:loading 1s linear infinite;" class="fa fa-spinner"></i>
+                        </p>
+                        <a href="javascript:void(0)" class="btn btn btn-primary" style="margin: 0 10px;"
+                            id="transfer-btn">
+                            <i class="fa fa-share"></i>&nbsp;&nbsp;Transférer du solde
+                        </a>
+                        <p style="display:none; margin: 10px 10px 0; font-size: 22px; color: orangered"
+                            id="sim-pass-text">
+                        </p>
+                        <div>
+                            <a href="javascript:void(0)" class="btn btn btn-warning"
+                                style="display:none; font-weight: bold; margin: 10px 10px 0" id="sim-pass-btn">
+                                <i class="fa fa-image"></i>&nbsp;&nbsp;Pass d'images satellites ILLIMITÉES
+                            </a>
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <p style="margin: 15px 10px 0; font-weight: bold; font-size: 18px; color: #25908d">
+                            Recharger ce compte :</p>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align: right; padding: 0;">
+                            <a href="/preorder" target="_blank" class="btn buy-btn btn-info" style="margin: 5px 10px;">
+                                <i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Acheter un code
+                            </a>
+                        </div>
+                        <div class="col" style="text-align: left; padding: 0;">
+                            <a href="javascript:void(0)" class="btn btn-success" style="margin: 5px 10px;"
+                                id="code-btn">
+                                <i class="fa fa-hashtag"></i>&nbsp;&nbsp;Entrer un code
+                            </a>
+                        </div>
+                    </div>
+                    <div class="modal-footer text-center" style="margin-top: 10px; padding: 10px 0 0;">
+                        <a href="javascript:void(0)" class="logout-btn btn btn-secondary">
+                            <i class="fa fa-power-off"></i>&nbsp;&nbsp;Se déconnecter
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="codeModal" tabindex="-1" role="dialog" aria-labelledby="codeModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 400px;" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="display: block; padding: 10px 10px 5px">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        ✖
+                    </button> <span style="vertical-align: middle; font-size: 18px;"><b>Entrer un code de
+                            recharge</b></span>
+                </div>
+                <div class="modal-body" style="padding: 10px">
+                    <div style="text-align: center;">
+                        <input type="text" class="form-control" style="text-align: center;" id="code-textbox"
+                            placeholder="Tapez le code ici" />
+                    </div>
+                    <div class="modal-footer text-center" style="margin-top: 10px; padding: 10px 0 0;">
+                        <a href="javascript:void(0)" class="btn btn-primary" id="apply-code-btn">
+                            <i class="fa fa-check"></i>&nbsp;&nbsp;Valider
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="transferModal" tabindex="-1" role="dialog" aria-labelledby="transferModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 400px;" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="display: block; padding: 10px 10px 5px">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        ✖
+                    </button> <span style="vertical-align: middle; font-size: 18px;"><b>Transférer du
+                            solde</b></span>
+                </div>
+                <div class="modal-body" style="padding: 10px">
+                    <div style="text-align: center;">
+                        <input type="text" class="form-control" style="text-align: center;" id="transfer-amount-textbox"
+                            placeholder="Montant à transférer en DH (ex : 10)" />
+                        <input type="text" class="form-control" style="margin-top: 10px; text-align: center;"
+                            id="transfer-email-textbox" placeholder="Email du compte à recharger" />
+                    </div>
+                    <div class="modal-footer text-center" style="margin-top: 10px; padding: 10px 0 0;">
+                        <a href="javascript:void(0)" class="btn btn-primary" id="apply-transfer-btn">
+                            <i class="fa fa-check"></i>&nbsp;&nbsp;Valider
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" style="overflow: auto;" id="messageModal" tabindex="-1" role="dialog"
+        aria-labelledby="messageModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 600px;" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="display: block; padding: 10px 10px 5px">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        ✖
+                    </button> <span style="vertical-align: middle; font-size: 18px;"><b>Notification</b></span>
+                </div>
+                <div class="modal-body" style="padding: 10px">
+                    <div id="message-text" style="text-align: center;">
+
+                    </div>
+                    <div class="modal-footer text-center" style="margin-top: 10px; padding: 10px 0 0;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="opacity: 1;">
+                            <a href="javascript:void(0)" class="btn btn-primary">
+                                &nbsp;OK&nbsp;
+                            </a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="dialogModal" tabindex="-1" role="dialog" aria-labelledby="dialogModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 600px;" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="display: block; padding: 10px 10px 5px">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        ✖
+                    </button>
+                    <span style="vertical-align: middle; font-size: 18px;"><b>Confirmation</b></span>
+                </div>
+                <div class="modal-body" style="padding: 10px">
+                    <div id="dialog-text" style="text-align: center;">
+
+                    </div>
+                    <div class="modal-footer text-center" style="margin-top: 10px; padding: 10px 0 0;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            style="opacity: .7;">
+                            <a href="javascript:void(0)" class="btn btn-primary" id="no-btn">
+                                &nbsp;Annuler&nbsp;
+                            </a>
+                        </button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="opacity: 1;">
+                            <a href="javascript:void(0)" class="btn btn-primary" id="yes-btn">
+                                &nbsp;Oui&nbsp;
+                            </a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModal"
+        data-keyboard="false" data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 150px; margin: 0 auto;"
+            role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="position: relative; font-size: 30px;">
+                    <div style="position: absolute; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%);">
+                        <i style="animation:loading 1s linear infinite;" class="fa fa-spinner"></i>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        ✖
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="initialProjModal" tabindex="-1" role="dialog" aria-hidden="true"
+        style="z-index: 999999;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 10px">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Choisissez votre pays et projection :</b></h5>
+                </div>
+                <div class="modal-body" style="padding: 10px">
+                    <div class="form-group row">
+                        <!-- Go To -->
+                        <select id="initial-proj-select" class="form-control" style="margin: 0 20px;">
+                            <option disabled selected>PAYS - PROJECTION</option>
+                            <option value="N">Maroc - Zone 1</option>
+                            <option value="S">Maroc - Zone 2</option>
+                            <option value="SN">Maroc - Zone 3</option>
+                            <option value="SS">Maroc - Zone 4</option>
+                            <option disabled>──────────</option>
+                            <option value="AN">Algérie - Nord</option>
+                            <option value="AS">Algérie - Sud</option>
+                            <option disabled>──────────</option>
+                            <option value="TN">Tunisie - Nord</option>
+                            <option value="TS">Tunisie - Sud</option>
+                            <option disabled>──────────</option>
+                            <option value="Q">Qatar - QNG94</option>
+                            <option disabled>──────────</option>
+                            <option value="F1">France - Zone 1</option>
+                            <option value="F2">France - Zone 2</option>
+                            <option value="F3">France - Zone 3</option>
+                            <option value="F4">France - Zone 4</option>
+                            <option value="F1C">France - Z1 Carto</option>
+                            <option value="F2C">France - Z2 Carto</option>
+                            <option value="F3C">France - Z3 Carto</option>
+                            <option value="F4C">France - Z4 Carto</option>
+                            <option value="FCC42">France - CC42 (Z1)</option>
+                            <option value="FCC43">France - CC43 (Z2)</option>
+                            <option value="FCC44">France - CC44 (Z3)</option>
+                            <option value="FCC45">France - CC45 (Z4)</option>
+                            <option value="FCC46">France - CC46 (Z5)</option>
+                            <option value="FCC47">France - CC47 (Z6)</option>
+                            <option value="FCC48">France - CC48 (Z7)</option>
+                            <option value="FCC49">France - CC49 (Z8)</option>
+                            <option value="FCC50">France - CC50 (Z9)</option>
+                        </select>
+                    </div>
+                    <button disabled id="apply-initial-proj" style="float: right" type="button"
+                        class="btn btn-primary">Confirmer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.slim.js"></script>
+    <script defer src="main.js?v=729"></script>
+    <script defer src="sat.js?v=700"></script>
+    <script>
+        var bg = new Image();
+        bg.src = './bg.png';
+        var cross = new Image();
+        cross.src = './cross.png';
+        var oneHasLoaded = false;
+        var imgLoaded = function (params) {
+            if (oneHasLoaded) {
+                document.querySelector('.loading').style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+                document.querySelector('.splash').style.backgroundImage = 'url("bg.png")';
+                document.querySelector('.splash').style.display = 'block';
+                document.querySelector('.cross').style.backgroundImage = 'url("cross.png")';
+                document.querySelector('.cross').style.display = 'block';
+            } else {
+                oneHasLoaded = true;
+            }
+        };
+        bg.onload = imgLoaded;
+        cross.onload = imgLoaded;
+    </script>
+</body>
+
+</html>
